@@ -1,583 +1,1045 @@
+```ht
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Darbari Heritage | Tri-Lingual Ultimate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --text-dark: #1d1d1f;
-            --gold: #c5a059;
-            --apple-spring: cubic-bezier(0.32, 0.72, 0, 1);
-        }
+<meta charset="UTF-8">
+<!-- باگ دسترسی‌پذیری برطرف شد: قابلیت زوم آزاد شد -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="منوی کافه نان درباری؛ نوشیدنی‌های گرم، سرد، نان و شیرینی تازه با تجربه‌ای لوکس و اصیل.">
+<title>کافه نان درباری | Nan Darbari</title>
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+<!-- Fonts: Vazirmatn (FA/AR) + Cormorant/Cinzel (EN/TR) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-        body, html {
-            width: 100vw; height: 100vh; overflow: hidden;
-            background-color: #000; color: #fff; perspective: 1000px;
-        }
+<style>
+:root {
+  --bg:         #020409;
+  --bg-mid:     #08101E;
+  --bg-card:    #050811;
+  --ink:        #FDFBF5;
+  --ink-soft:   #D8C9B3;
+  --ink-muted:  #9AA6B8;
+  --gold:       #D4AF37;
+  --gold-light: #F3E5AB;
+  --gold-dim:   #755E1D;
+  --glass-bg:   rgba(6, 11, 22, 0.7);
+  --glass-brd:  rgba(212, 175, 55, 0.2);
+}
 
-        /* --- اتمسفر لیکویید --- */
-        #main-bg {
-            position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at center, #2c2c2e 0%, #000000 100%);
-            transition: background 1.5s ease;
-        }
-        .blob {
-            position: absolute; border-radius: 50%; filter: blur(80px);
-            opacity: 0.6; transition: all 2s ease;
-            animation: drift 20s infinite alternate;
-        }
-        .blob-1 { width: 90vw; height: 90vw; background: #c5a059; top: -20%; left: -20%; }
-        .blob-2 { width: 70vw; height: 70vw; background: #3a3a3c; bottom: -10%; right: -10%; }
-        @keyframes drift { from { transform: translate(0,0); } to { transform: translate(60px, 60px); } }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { background: var(--bg); }
+body { background:var(--bg); color:var(--ink); overflow-x:hidden; position: relative; -webkit-font-smoothing: antialiased; }
+body.modal-open { overflow: hidden; touch-action: none; }
 
-        /* --- ساختار SPA --- */
-        #app-shell { position: relative; width: 100%; height: 100%; z-index: 10; max-width: 480px; margin: 0 auto; }
-        
-        .page-view {
-            position: absolute; inset: 0; padding: 25px; padding-bottom: 140px;
-            overflow-y: auto; overflow-x: hidden;
-            transition: all 0.8s var(--apple-spring);
-            -webkit-overflow-scrolling: touch;
-        }
-        .home-active { transform: scale(1); opacity: 1; visibility: visible; }
-        .home-inactive { transform: scale(0.9) translateZ(-100px); opacity: 0.3; filter: blur(10px); visibility: hidden;}
-        
-        .cat-hidden { opacity: 0; visibility: hidden; }
-        [dir="rtl"] .cat-hidden { transform: translateX(100%); }
-        [dir="ltr"] .cat-hidden { transform: translateX(-100%); }
-        .cat-active { transform: translateX(0) !important; opacity: 1; visibility: visible; }
+/* Focus States for Accessibility */
+*:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 4px; border-radius: 4px; }
 
-        /* --- هدر --- */
-        header { text-align: center; padding: 40px 0 20px; }
-        .logo-box {
-            width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 22px;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; font-weight: 900; color: #fff;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .brand-fa { font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; }
-        .brand-en { color: var(--gold); font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; margin-top: 5px; font-weight: 300; }
+html[lang="fa"] body, html[lang="ar"] body { font-family: 'Vazirmatn', sans-serif; }
+html[lang="en"] body, html[lang="tr"] body { font-family: 'Cormorant Garamond', serif; }
+.cinzel-font { font-family: 'Cinzel', serif; }
+html[lang="fa"] .cinzel-font, html[lang="ar"] .cinzel-font { font-family: 'Vazirmatn', sans-serif; font-weight: 700; }
+.eng-title { font-family: 'Cinzel', serif !important; direction: ltr; }
 
-        /* --- کارت‌های اصلی --- */
-        .category-list { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px; padding: 35px 25px;
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; position: relative; overflow: hidden;
-            transform-style: preserve-3d; transition: transform 0.2s;
-            -webkit-transform: translateZ(0); transform: translateZ(0);
-            touch-action: manipulation;
-        }
-        .glass-card:active { transform: scale(0.95) translateZ(0) !important; }
-        .cat-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 5px; }
-        .cat-sub { color: rgba(255,255,255,0.5); font-size: 0.8rem; font-weight: 400; }
-        .cat-icon { font-size: 2.2rem; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025; pointer-events: none; z-index: 9999; mix-blend-mode: overlay;
+}
 
-        /* --- هدر دسته‌بندی --- */
-        .sticky-nav {
-            position: sticky; top: 0; z-index: 100; display: flex; align-items: center;
-            padding: 15px 0; background: rgba(0,0,0,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            margin: -25px -25px 20px -25px; border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .back-btn {
-            width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2); color: #fff;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            margin: 0 20px; touch-action: manipulation;
-        }
-        .back-btn:active { transform: scale(0.9); }
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  .gn-btn, .lb, button, .mi, a, .modal-close { cursor: none !important; }
+  #cur { width:4px;height:4px;background:var(--gold-light);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:100000;box-shadow: 0 0 8px 1px rgba(243, 229, 171, 0.8); will-change: transform; }
+  #cur-ring { width:32px;height:32px;border:1px solid rgba(212, 175, 55, 0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99998;transition: width 0.2s, height 0.2s, border-color 0.2s; will-change: transform; transform: translate(-50%, -50%);}
+  body.cursor-hover #cur-ring { width: 45px; height: 45px; border-color: var(--gold-light); background: rgba(212,175,55,0.05);}
+}
 
-        /* --- لیست محصولات --- */
-        .product-item {
-            display: flex; padding: 18px; margin-bottom: 15px; align-items: center;
-            background: rgba(255,255,255,0.03); border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer; transition: transform 0.2s; touch-action: manipulation;
-        }
-        .product-item:active { transform: scale(0.96); }
-        .p-img-box {
-            width: 90px; height: 90px; border-radius: 20px; background: rgba(255,255,255,0.05);
-            display: flex; align-items: center; justify-content: center; color: #555;
-            position: relative; overflow: hidden; flex-shrink: 0;
-        }
-        .p-meta { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 15px; }
-        .p-name { font-size: 1.1rem; font-weight: 800; margin-bottom: 5px; }
-        .p-price { color: var(--gold); font-weight: 700; }
+#lang-sw { position:fixed; top:2rem; left:2rem; z-index:200; display:flex; gap:.2rem; padding:.3rem; border-radius:999px; background:var(--glass-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--glass-brd); transition:opacity .6s; }
+.lb { background:none; border:none; color:rgba(253, 251, 245, 0.5); font-size:.65rem; font-weight:500; letter-spacing:.1em; padding:.4rem .8rem; transition:all .3s; border-radius:999px; cursor: pointer; }
+html[lang="en"] .lb, html[lang="tr"] .lb { font-family: 'Cinzel', serif; font-size:.5rem; letter-spacing:.15em;}
+.lb:hover { color:var(--ink); }
+.lb.active { color:var(--gold-light); background:rgba(212,175,55,.15); border:1px solid rgba(212,175,55,.3); }
 
-        /* --- مودال‌ها --- */
-        .modal {
-            position: fixed; inset: 0; z-index: 2000; visibility: hidden; opacity: 0;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            transition: 0.5s; display: flex; flex-direction: column; justify-content: flex-end;
-        }
-        .modal.active { visibility: visible; opacity: 1; }
-        .sheet {
-            background: #1c1c1e; border-radius: 40px 40px 0 0; padding: 40px 30px;
-            transform: translateY(100%); transition: 0.6s var(--apple-spring);
-            border-top: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto;
-        }
-        .modal.active .sheet { transform: translateY(0); }
+#cinematic-wrap { position:relative; height: 300vh; z-index:1; }
+@media(max-width:850px){ #cinematic-wrap { height: 180vh; } }
 
-        .studio-light {
-            width: 100%; height: 250px; background: #2c2c2e; border-radius: 30px;
-            margin-bottom: 25px; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2);
-        }
+#cinematic-sticky { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; }
+#c { position:absolute; inset:0; width:100%; height:100%; display:block; }
+#vig { position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 10%,rgba(2,4,9,.85) 65%,rgba(2,4,9,1) 100%);z-index:5;pointer-events:none; }
 
-        .confirm-btn {
-            background: #fff; color: #000; border: none; padding: 22px; border-radius: 22px;
-            width: 100%; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: 0.3s;
-            touch-action: manipulation;
-        }
-        .confirm-btn:active { transform: scale(0.95); }
-        
-        .locked-btn { opacity: 0.2; pointer-events: none; }
-        .unlocked-btn { opacity: 1; pointer-events: auto; background: var(--gold); color: #fff; }
+#s-final { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;pointer-events:none;text-align:center; opacity:0; transform:translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.final-text { font-size:clamp(2.5rem,7vw,5.5rem);font-weight:700;color:var(--ink);line-height:1.1; margin:0; text-shadow: 0 0 50px rgba(212,175,55,0.5), 0 10px 40px rgba(0,0,0,1); letter-spacing: 0.1em; }
+.final-sub { display:block; font-size:clamp(0.7rem, 2vw, 1.2rem); letter-spacing: 0.8em; color:var(--gold); margin-top: 10px; font-weight: 400; text-indent: 0.8em;}
 
-        /* --- سبد خرید و نظرسنجی --- */
-        .cart-btn {
-            position: fixed; bottom: 40px; left: 30px; width: 75px; height: 75px;
-            background: #fff; color: #000; border-radius: 50%; z-index: 1000;
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: transform 0.3s var(--apple-spring);
-            cursor: pointer; touch-action: manipulation;
-        }
-        .cart-btn:active { transform: scale(0.9); }
-        .cart-badge {
-            position: absolute; top: -5px; right: -5px; background: var(--gold);
-            width: 28px; height: 28px; border-radius: 50%; border: 4px solid #000;
-            font-size: 0.8rem; font-weight: 900; display: flex; align-items: center; justify-content: center; color: #fff;
-        }
+#start-ui { position: absolute; bottom: 3.5rem; left: 50%; transform: translateX(-50%); z-index: 25; display: flex; flex-direction: column; align-items: center; gap: 1.8rem; transition: opacity 0.4s ease, transform 0.4s ease; }
+#start-ui.hidden { opacity: 0; transform: translateX(-50%) translateY(25px); }
 
-        .emoji-row { display: flex; justify-content: space-around; margin: 25px 0; }
-        .emoji { font-size: 2.5rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; cursor: pointer; touch-action: manipulation; }
-        .emoji.selected { filter: grayscale(0); opacity: 1; transform: scale(1.3); }
+@keyframes softPulse { 0%, 100% { box-shadow: 0 0 10px rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.3); } 50% { box-shadow: 0 0 25px rgba(212,175,55,0.4); border-color: rgba(212,175,55,0.6); } }
+#skip-menu { background: rgba(212,175,55,.14); color: var(--gold-light); border: 1px solid rgba(212,175,55,.4); border-radius: 999px; padding: .75rem 2rem; font-size: .85rem; letter-spacing: .1em; cursor: pointer; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); transition: all 0.4s ease; animation: softPulse 3s infinite ease-in-out; touch-action: manipulation; }
+html[lang="en"] #skip-menu, html[lang="tr"] #skip-menu { font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;}
+#skip-menu:hover { background: rgba(212,175,55,.25); border-color: var(--gold); transform: scale(1.05); }
 
-        /* --- انیمیشن پرواز --- */
-        .flying-item {
-            position: fixed; z-index: 5000; width: 30px; height: 30px;
-            background: var(--gold); border-radius: 50%; pointer-events: none;
-            transition: all 0.7s cubic-bezier(0.2, 1, 0.3, 1);
-        }
+.swipe-icon { width: 32px; height: 32px; opacity: 0.8; animation: swipeGesture 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+@keyframes swipeGesture { 0% { transform: translateY(15px) scale(0.9); opacity: 0; } 15% { transform: translateY(15px) scale(1); opacity: 0.8; } 75% { transform: translateY(-10px) scale(1); opacity: 0.2; } 100% { transform: translateY(-10px) scale(0.9); opacity: 0; } }
 
-        /* --- سیستم ۳ زبانه (ثابت در سمت چپ) --- */
-        .lang-switch {
-            position: absolute; top: 25px; left: 25px; width: 50px; height: 50px;
-            border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1); color: #fff; font-weight: 800;
-            display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100;
-            touch-action: manipulation;
-        }
-        .lang-switch:active { transform: scale(0.9); }
+#prog-bar { position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold));width:0%;z-index:20; transition: width 0.1s linear; }
+#prog-bar::after { content:''; position:absolute; right:0; top:-2px; width:6px; height:6px; border-radius:50%; background:var(--gold-light); box-shadow:0 0 8px var(--gold); }
 
-        .btn-snapp { background: #21aa58; color: #fff; margin-top: 15px; padding: 18px; border-radius: 20px; border: none; width: 100%; font-weight: 800; touch-action: manipulation;}
-        .btn-tapsi { background: #ff4500; color: #fff; margin-top: 10px; padding: 18px; border-radius: 20px; border: none; width: 100%; font-weight: 800; touch-action: manipulation;}
-        .btn-snapp:active, .btn-tapsi:active { transform: scale(0.95); }
+#glass-nav { position:fixed;top:2rem;left:50%;transform:translateX(-50%) translateY(-150px);z-index:300;transition:transform .8s cubic-bezier(.19,1,.22,1),opacity .6s;opacity:0; max-width: 95vw; overflow-x: auto; scrollbar-width: none; }
+#glass-nav::-webkit-scrollbar { display: none; }
+#glass-nav.show { transform:translateX(-50%) translateY(0);opacity:1; }
+.gnav-inner { display:flex;align-items:center;padding:.35rem;border-radius:999px;background:var(--glass-bg);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid var(--glass-brd);box-shadow:0 15px 40px rgba(0,0,0,.8);position:relative; width: max-content; margin: 0 auto;}
+.gnav-pill { position:absolute;height:calc(100% - .7rem);border-radius:999px;background:linear-gradient(135deg,rgba(212,175,55,.2),transparent);border:1px solid rgba(212,175,55,.25);transition:all .4s cubic-bezier(0.25, 1, 0.5, 1);pointer-events:none;top:.35rem; }
+.gn-btn { position:relative;background:none;border:none;padding:.65rem 1.6rem;border-radius:999px;font-size:.85rem;color:rgba(253, 251, 245, 0.6);transition:color .3s; font-weight: 500; white-space: nowrap; cursor: pointer;}
+html[lang="en"] .gn-btn, html[lang="tr"] .gn-btn { font-family: 'Cinzel', serif; font-size:.6rem; letter-spacing: .2em; text-transform: uppercase;}
+.gn-btn:hover { color:var(--ink); }
+.gn-btn.active { color:var(--gold-light); }
 
-        ::-webkit-scrollbar { display: none; }
-    </style>
+main { background:var(--bg); position:relative; z-index:2; }
+#about-brand { text-align: center; padding: 7rem 2rem 2rem; max-width: 800px; margin: 0 auto; scroll-margin-top: 50px; }
+.about-subtitle { color: var(--gold-dim); font-size: 0.95rem; letter-spacing: 0.2em; margin-bottom: 1.2rem; }
+.about-title { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--ink); margin-bottom: 1.8rem; font-weight: 700;}
+.about-desc { font-size: 1.15rem; color: var(--ink-muted); line-height: 2.2; font-weight: 300;}
+html[lang="en"] .about-subtitle, html[lang="tr"] .about-subtitle { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.4em;}
+html[lang="en"] .about-title, html[lang="tr"] .about-title { font-family: 'Cinzel', serif; font-weight: 400;}
+
+.menu-inner { max-width:1200px;margin:0 auto;padding:6rem 2rem 4rem; scroll-margin-top: 120px; }
+.sec-head { text-align:center;margin-bottom:5rem; }
+.sec-title { font-size:clamp(2.2rem,4vw,3.2rem);color:var(--ink);font-weight:700; }
+.sec-orn { width:70px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.8rem auto 0; box-shadow: 0 0 12px var(--gold); }
+html[lang="en"] .sec-title, html[lang="tr"] .sec-title { font-family: 'Cinzel', serif; font-weight: 400; letter-spacing: .08em;}
+
+.mgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.8rem; }
+
+.mi { background:var(--bg-card); border-radius:12px; position:relative; overflow:hidden; transition: transform .4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow .4s ease; border: 1px solid rgba(212, 175, 55, 0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.2); cursor: pointer; }
+.mi-content { padding:2.5rem 2rem; position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; min-height: 290px;}
+.mi::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:2px; background:var(--gold); transition:width .5s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 3; }
+
+@media (hover: hover) {
+  .mi:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.15) inset; }
+  .mi:hover::after { width:100%; }
+  .mi:hover .mi-thumb img { transform: scale(1.1); }
+  .mi:hover .mi-thumb { border-color: rgba(212,175,55,0.5); }
+}
+
+.mi-top { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.5rem; }
+.mi-thumb { width: 64px; height: 64px; border-radius: 12px; background: var(--bg-mid); border: 1px solid rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: hidden; transition: all 0.4s ease; position: relative;}
+.mi-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+
+.mi-title-box { flex: 1; }
+.mi-num { font-size:.8rem;color:rgba(212,175,55,.5);margin-bottom:.3rem; font-weight:300;}
+.mi-name { font-size:1.35rem;color:var(--ink);margin-bottom:.2rem;font-weight:700; }
+.mi-local { font-size:.95rem;color:var(--ink-soft);opacity:.7; direction: auto;}
+
+.mi-desc { font-size:.95rem;color:var(--ink-muted);line-height:2.1;font-weight:300; margin-bottom:2.5rem; flex-grow: 1; }
+.mi-foot { display:flex;justify-content:space-between;align-items:center; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 1.5rem; }
+.mi-price { font-size:1.15rem;color:var(--gold-light); font-weight:500;}
+.mi-tag { font-size:.75rem;color:rgba(243,229,171,.8);border:1px solid rgba(212,175,55,.25);padding:.25rem .7rem;border-radius:100px; background: rgba(212,175,55,0.05); }
+
+html[lang="en"] .mi-num, html[lang="tr"] .mi-num { font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .4em;}
+html[lang="en"] .mi-name, html[lang="tr"] .mi-name { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 500; letter-spacing: .05em;}
+html[lang="en"] .mi-local, html[lang="tr"] .mi-local { font-style: italic; font-size: .95rem;}
+html[lang="en"] .mi-desc, html[lang="tr"] .mi-desc { font-size: .95rem;}
+html[lang="en"] .mi-price, html[lang="tr"] .mi-price { font-family: 'Cinzel', serif; font-size: 1.05rem; letter-spacing: .05em;}
+html[lang="en"] .mi-tag, html[lang="tr"] .mi-tag { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase;}
+
+.divider { display:flex;align-items:center;gap:1.5rem;padding:3rem;max-width:1100px;margin:0 auto; }
+.dl { flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.15)); }
+.dl:last-child { background:linear-gradient(90deg,rgba(212,175,55,.15),transparent); }
+.di { color:rgba(212,175,55,.4);font-size:1.1rem; }
+
+.modal-wrap { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 1.5rem; }
+.modal-wrap.active { opacity: 1; pointer-events: auto; }
+.modal-bg { position: absolute; inset: 0; background: rgba(2, 4, 9, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); cursor: pointer; }
+.modal-box { position: relative; z-index: 2; background: var(--bg-card); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; width: 100%; max-width: 420px; display: flex; flex-direction: column; overflow: hidden; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 0 1px rgba(212,175,55,0.1) inset; opacity: 0; }
+.modal-wrap.active .modal-box { transform: translateY(0) scale(1); opacity: 1; }
+
+.modal-hero { height: 260px; position: relative; background: var(--bg-mid); overflow: hidden; }
+.modal-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(2,4,9,0.5) 0%, transparent 40%, rgba(5,8,17,1) 100%); pointer-events: none; }
+
+.modal-close { position: absolute; top: 1.2rem; right: 1.2rem; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.6); border: 1px solid rgba(212,175,55,0.4); color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; transition: all 0.3s; font-size: 1.2rem; backdrop-filter: blur(5px); }
+.modal-close:hover { background: var(--gold); color: var(--bg); transform: rotate(90deg); }
+
+.modal-content-wrap { padding: 1.5rem 2rem 2.5rem; text-align: center; position: relative; z-index: 2; margin-top: -20px; }
+.modal-title { font-size: 1.8rem; color: var(--ink); margin-bottom: 0.4rem; font-weight: 700;}
+.modal-local { font-size: 1.1rem; color: var(--gold); margin-bottom: 1.5rem; }
+.modal-desc { font-size: 1.05rem; color: var(--ink-muted); line-height: 2; margin-bottom: 2.5rem; font-weight: 300; }
+.modal-price { font-size: 1.5rem; color: var(--gold-light); margin-bottom: 2.5rem; font-weight: 500;}
+.modal-btn { display: inline-block; width: 100%; padding: 1.2rem; background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); border: 1px solid rgba(212,175,55,0.4); color: var(--gold-light); border-radius: 99px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; font-weight: 500; font-family: inherit;}
+.modal-btn:hover { background: var(--gold); color: var(--bg); box-shadow: 0 10px 25px rgba(212,175,55,0.3); transform: translateY(-2px); }
+
+/* --- Footer Premium Redesign --- */
+footer { border-top:1px solid rgba(255,255,255,0.03);padding:7rem 2rem 4rem; background: var(--bg-card); display:flex; flex-direction:column; align-items:center; gap: 4.5rem; position: relative; overflow: hidden;}
+footer::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.5;}
+
+.f-brand-story { text-align: center; max-width: 600px; }
+.f-brand-story h2 { font-size:2.5rem; color:var(--gold); letter-spacing:.25em; font-weight: 700; margin-bottom: 1.5rem; text-shadow: 0 0 20px rgba(212,175,55,0.2);}
+.f-slogan { font-size: 1.4rem; color: var(--ink); font-weight: 400; letter-spacing: 1px; margin-bottom: 0.5rem;}
+.f-slogan-en { font-size: 0.85rem; color: var(--gold-dim); letter-spacing: 0.3em; text-transform: uppercase;}
+html[lang="en"] .f-slogan, html[lang="tr"] .f-slogan { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; text-transform: uppercase;}
+
+.f-info { display: flex; gap: 4rem; flex-wrap: wrap; justify-content: center; text-align: center; max-width: 1000px;}
+.f-col h3 { color: var(--ink); font-size: 1.1rem; margin-bottom: 1.5rem; font-weight: 500; opacity: 0.9;}
+.f-col p, .f-col a { color: var(--ink-muted); font-size: 1rem; text-decoration: none; display: block; line-height: 2.2; font-weight: 300; transition: color 0.3s;}
+.f-col a:hover { color: var(--gold-light); }
+.f-copy { width: 100%; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 2.5rem; color: rgba(154, 166, 184, 0.3); font-size: 0.85rem; font-family: sans-serif; letter-spacing: 1px;}
+
+.rv { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.rv.vis { opacity:1; transform:translateY(0); }
+
+@media(max-width:850px){ 
+  #lang-sw { top: 1.5rem; left: 1.5rem; padding: .2rem;}
+  .lb { font-size: .6rem; padding: .3rem .6rem;}
+  #glass-nav { top: auto; bottom: 1.5rem; transform:translateX(-50%) translateY(150px); max-width: 90vw;}
+  #glass-nav.show { transform:translateX(-50%) translateY(0); }
+  .gnav-inner { padding: 0.2rem; }
+  .gn-btn { padding: .55rem 1rem; font-size: .8rem; }
+  
+  .mgrid{grid-template-columns:1fr; gap: 1.2rem;} 
+  .menu-inner{padding:4rem 1.2rem 6rem; scroll-margin-top: 60px;} 
+  .mi-content{padding: 2rem 1.5rem; min-height: auto;}
+  .mi-top { gap: 1rem; }
+  .mi-thumb { width: 56px; height: 56px; border-radius: 10px;}
+  
+  .f-info { gap: 3rem; flex-direction: column;}
+  .modal-wrap { padding: 1rem; }
+  .modal-hero { height: 200px; }
+  .modal-content-wrap { padding: 1.5rem 1.5rem 2rem; }
+  
+  footer { padding: 5rem 1.5rem 3rem; gap: 3.5rem; }
+  .f-brand-story h2 { font-size: 2rem; }
+  .f-slogan { font-size: 1.2rem; }
+}
+</style>
 </head>
-<body dir="rtl" ontouchstart="">
+<body>
 
-    <div id="main-bg">
-        <div class="blob blob-1" id="blob1"></div>
-        <div class="blob blob-2" id="blob2"></div>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<div id="lang-sw" aria-label="Language Switcher" dir="ltr">
+  <button class="lb active" data-lang="fa" aria-label="Persian">FA</button>
+  <button class="lb" data-lang="en" aria-label="English">EN</button>
+  <button class="lb" data-lang="ar" aria-label="Arabic">AR</button>
+  <button class="lb" data-lang="tr" aria-label="Turkish">TR</button>
+</div>
+
+<nav id="glass-nav" aria-label="Menu categories">
+  <div class="gnav-inner">
+    <div class="gnav-pill" id="gnav-pill"></div>
+    <button class="gn-btn active" data-target="hot" data-i="nav_hot">نوشیدنی گرم</button>
+    <button class="gn-btn" data-target="cold" data-i="nav_cold">نوشیدنی سرد</button>
+    <button class="gn-btn" data-target="bakery" data-i="nav_bakery">نان و شیرینی</button>
+  </div>
+</nav>
+
+<header id="cinematic-wrap">
+  <div id="cinematic-sticky">
+    <canvas id="c" aria-label="Cinematic Coffee Animation"></canvas>
+    <div id="vig"></div>
+    <div id="prog-bar"></div>
+    
+    <div id="s-final">
+      <h2 class="final-text eng-title">NAN DARBARI<br><span class="final-sub">CAFE</span></h2>
     </div>
+    
+    <div id="start-ui">
+      <button id="skip-menu" data-i="skip" aria-label="View Menu">مشاهده منو</button>
+      <svg class="swipe-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 11V6a2 2 0 0 0-4 0v11"/>
+        <path d="M10 17H7.3a4 4 0 0 1-3.9-3.4L3 11a2 2 0 0 1 3.2-1.6l3.8 2.6"/>
+        <path d="M14 12.5V11a2 2 0 0 1 4 0v1.5"/>
+        <path d="M18 14v-1.5a2 2 0 0 1 4 0V17a7 7 0 0 1-7 7H9.5"/>
+      </svg>
+    </div>
+  </div>
+</header>
 
-    <div id="app-shell">
+<main>
+  <section id="about-brand" class="rv">
+    <p class="about-subtitle cinzel-font" data-i="hero_lbl">NAN DARBARI</p>
+    <h2 class="about-title" data-i="about_title">اینجا فقط یک کافه نیست</h2>
+    <p class="about-desc" data-i="about_desc">نان درباری جایی است برای نان تازه، شیرینی گرم، قهوه خوش‌طعم و چند دقیقه آرامش.</p>
+  </section>
+
+  <div id="menu-section">
+    <!-- HOT -->
+    <section class="menu-inner" id="hot">
+      <div class="sec-head rv"><h2 class="sec-title cinzel-font" data-i="hot_title">نوشیدنی گرم</h2><div class="sec-orn"></div></div>
+      <div class="mgrid">
+        <!-- اضافه شدن tabindex و role به تمامی article ها برای a11y -->
+        <article class="mi rv clickable-item" data-item-id="h1" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Espresso" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">01</div><h3 class="mi-name cinzel-font" data-i="h1n">Espresso</h3><p class="mi-local" data-i="h1l">اسپرسو</p></div>
+            </div>
+            <p class="mi-desc" data-i="h1d">اسپرسوی غلیظ و خوش‌عطر، مناسب شروع یک روز جدی.</p>
+            <div class="mi-foot"><span class="mi-price cinzel-font" data-i="h1p">۴۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div>
+          </div>
+        </article>
         
-        <div id="home-view" class="page-view home-active">
-            
-            <div class="lang-switch" onclick="toggleLang()" id="lang-toggle-btn">FA</div>
-
-            <header>
-                <div class="logo-box">D</div>
-                <h1 class="brand-fa"><span data-fa="کافه نان درباری" data-en="Darbari Heritage" data-tr="Darbari Heritage">کافه نان درباری</span></h1>
-                <div class="brand-en">Boulangerie & Pâtisserie</div>
-            </header>
-
-            <div class="category-list">
-                <div class="glass-card" onclick="openCat('hot', '#c5a059', 'نوشیدنی گرم', 'Hot Beverages', 'Sıcak İçecekler')">
-                    <div class="info">
-                        <div class="cat-title"><span data-fa="نوشیدنی گرم" data-en="Hot Beverages" data-tr="Sıcak İçecekler">نوشیدنی گرم</span></div>
-                        <div class="cat-sub"><span data-fa="عصاره‌گیری تخصصی عربیکا" data-en="Specialty Arabica Roasts" data-tr="Özel Arabica Kavurması">عصاره‌گیری تخصصی عربیکا</span></div>
-                    </div>
-                    <div class="cat-icon">☕</div>
-                </div>
-                <div class="glass-card" onclick="openCat('cold', '#007aff', 'نوشیدنی سرد', 'Cold Beverages', 'Soğuk İçecekler')">
-                    <div class="info">
-                        <div class="cat-title"><span data-fa="نوشیدنی سرد" data-en="Cold Beverages" data-tr="Soğuk İçecekler">نوشیدنی سرد</span></div>
-                        <div class="cat-sub"><span data-fa="ترکیبات یخی و انرژی‌بخش" data-en="Iced & Refreshing Mixes" data-tr="Buzlu ve Ferahlatıcı">ترکیبات یخی و انرژی‌بخش</span></div>
-                    </div>
-                    <div class="cat-icon">🍹</div>
-                </div>
-                <div class="glass-card" onclick="openCat('bakery', '#ff9500', 'نان و شیرینی', 'Boulangerie', 'Fırın & Pastane')">
-                    <div class="info">
-                        <div class="cat-title"><span data-fa="نان و شیرینی" data-en="Boulangerie" data-tr="Fırın & Pastane">نان و شیرینی</span></div>
-                        <div class="cat-sub"><span data-fa="پخت روزانه با کره فرانسوی" data-en="Daily French Butter Bakes" data-tr="Günlük Fransız Tereyağlı">پخت روزانه با کره فرانسوی</span></div>
-                    </div>
-                    <div class="cat-icon">🥐</div>
-                </div>
-                <div class="glass-card" onclick="openAbout()" style="justify-content: center; padding: 25px;">
-                    <span style="color: #fff; font-weight: 800; font-size: 1.1rem;"><span data-fa="درباره ما" data-en="About Us" data-tr="Hakkımızda">درباره ما</span></span>
-                </div>
+        <article class="mi rv clickable-item" data-item-id="h2" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1551030173-122aabc4489c?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1551030173-122aabc4489c?w=200&q=80" alt="Americano" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">02</div><h3 class="mi-name cinzel-font" data-i="h2n">Americano</h3><p class="mi-local" data-i="h2l">آمریکانو</p></div>
             </div>
-        </div>
-
-        <div id="cat-view" class="page-view cat-hidden">
-            <div class="sticky-nav">
-                <button class="back-btn" onclick="goHome()">❮</button>
-                <h2 id="view-title" style="color:#fff; font-weight: 900; flex-grow:1; text-align:center; padding-right:65px;">عنوان</h2>
-            </div>
-            <div id="product-list"></div>
-        </div>
-    </div> 
-
-    <div class="cart-btn" onclick="openCartModal()">
-        <span class="cart-badge" id="cart-count">۰</span>
-        🛒
-    </div>
-
-    <div class="modal" id="p-modal" onclick="closeModal('p-modal', event)">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <div class="studio-light">
-                <span data-fa="تصویر محصول" data-en="Product Image" data-tr="Ürün Görseli">تصویر محصول</span>
-            </div>
-            <h2 id="m-name" style="color:#fff; font-size:1.8rem; font-weight:900; margin-bottom:10px;">نام محصول</h2>
-            <div id="m-price" style="color:var(--gold); font-size:1.3rem; font-weight:800; margin-bottom:20px;">قیمت</div>
-            <p id="m-desc" style="color:rgba(255,255,255,0.5); line-height:1.8; margin-bottom:30px;">توضیحات</p>
-            <button class="confirm-btn" style="background:#fff; color:#000;" onclick="addWithAnim(event)">
-                <span data-fa="افزودن به سبد خرید" data-en="Add to Order" data-tr="Sepete Ekle">افزودن به سبد خرید</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="modal" id="cart-modal" onclick="closeModal('cart-modal', event)">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <h2 style="color:#fff; margin-bottom:20px;"><span data-fa="سفارش شما" data-en="Your Order" data-tr="Siparişiniz">سفارش شما</span></h2>
-            <div id="cart-items-container" style="max-height:250px; overflow-y:auto; margin-bottom:20px;"></div>
-            
-            <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; margin: 20px 0;">
-                <span data-fa="جمع کل:" data-en="Total:" data-tr="Toplam:">جمع کل:</span>
-                <span style="color: var(--gold);"><span id="cart-total">۰</span> <span data-fa="ت" data-en="T" data-tr="T">ت</span></span>
-            </div>
-
-            <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
-                <p style="text-align:center; color:var(--gold); font-size:0.85rem; font-weight:800;">
-                    <span data-fa="تجربه شما تا این لحظه؟" data-en="Rate your experience?" data-tr="Deneyiminizi nasıl değerlendirirsiniz?">تجربه شما تا این لحظه؟</span>
-                </p>
-                <div class="emoji-row">
-                    <div class="emoji" onclick="selectEmoji(this)">😞</div>
-                    <div class="emoji" onclick="selectEmoji(this)">😐</div>
-                    <div class="emoji" onclick="selectEmoji(this)">🤩</div>
-                </div>
-                <textarea id="feedback" placeholder="نکته‌ای برای بهبود؟" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:15px; padding:15px; color:#fff; display:none; resize:none; font-family:inherit;"></textarea>
-            </div>
-            <button id="final-btn" class="confirm-btn locked-btn" style="margin-top:20px;" onclick="finish()">
-                <span data-fa="ثبت نهایی سفارش" data-en="Confirm Order" data-tr="Siparişi Onayla">ثبت نهایی سفارش</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="modal" id="about-modal" onclick="closeModal('about-modal', event)">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <div class="logo-box" style="width:60px; height:60px; font-size:1.5rem; margin-bottom:20px;">D</div>
-            <h2 style="color:#fff; margin-bottom:15px;">Darbari Heritage</h2>
-            <p style="color:rgba(255,255,255,0.5); font-size:0.9rem; line-height:2;">
-                <span data-fa="تجربه‌ای فراتر از طعم در منطقه ۲۲. اصالت در پخت، مدرنیته در خدمت." data-en="An experience beyond taste in District 22. Authenticity in baking, modernity in service." data-tr="Bölge 22'de lezzetin ötesinde bir deneyim. Pişirmede özgünlük, hizmette modernlik.">تجربه‌ای فراتر از طعم در منطقه ۲۲. اصالت در پخت، مدرنیته در خدمت.</span>
-            </p>
-            <button class="confirm-btn" style="margin-top:20px; background:#333; color:#fff;" onclick="window.open('https://instagram.com/darbari_heritage')">Instagram</button>
-            <button class="btn-snapp" onclick="window.open('snapp://')"><span data-fa="🚕 درخواست اسنپ به مقصد کافه" data-en="🚕 Request Snapp Ride" data-tr="🚕 Kafeye Snapp çağır">🚕 درخواست اسنپ به مقصد کافه</span></button>
-            <button class="btn-tapsi" onclick="window.open('tapsi://')"><span data-fa="🚕 درخواست تپسی به مقصد کافه" data-en="🚕 Request Tapsi Ride" data-tr="🚕 Kafeye Tapsi çağır">🚕 درخواست تپسی به مقصد کافه</span></button>
-        </div>
-    </div>
-
-    <script>
-        const productsDB = {
-            'hot': [
-                { id: 'h1', fa: 'اسپرسو دوبل درباری', en: 'Double Espresso', tr: 'Duble Espresso', price: 85000, descFa: 'عصاره خالص با کرمای طلایی و بادی سنگین.', descEn: 'Pure extract with golden crema and heavy body.', descTr: 'Altın kremalı ve yoğun gövdeli saf ekstrakt.' },
-                { id: 'h2', fa: 'لاته آرت سلطنتی', en: 'Royal Latte Art', tr: 'Kraliyet Latte Sanatı', price: 110000, descFa: 'ترکیب شیر مخملی و اسپرسو ۱۰۰٪ عربیکا.', descEn: 'Velvety milk combined with 100% Arabica espresso.', descTr: 'Kadifemsi süt ve %100 Arabica espresso karışımı.' }
-            ],
-            'cold': [
-                { id: 'c1', fa: 'آیس آمریکانو', en: 'Iced Americano', tr: 'Buzlu Americano', price: 80000, descFa: 'خنک، خالص و پرانرژی برای روزهای گرم.', descEn: 'Cool, pure, and energetic for hot days.', descTr: 'Sıcak günler için serin, saf ve enerjik.' },
-                { id: 'c2', fa: 'فراپه کارامل', en: 'Caramel Frappe', tr: 'Karamel Frappe', price: 135000, descFa: 'ترکیب یخی شیر، قهوه و سیروپ کارامل.', descEn: 'Icy blend of milk, coffee, and caramel syrup.', descTr: 'Süt, kahve ve karamel şurubunun buzlu karışımı.' }
-            ],
-            'bakery': [
-                { id: 'b1', fa: 'کروسان لایه‌ای', en: 'Classic Croissant', tr: 'Klasik Kruvasan', price: 120000, descFa: 'پخت روزانه با کره اعلا، بسیار ترد.', descEn: 'Baked daily with premium butter, very crispy.', descTr: 'Birinci sınıf tereyağı ile günlük pişirilir, çok çıtır.' },
-                { id: 'b2', fa: 'نان جو دوسر (Pro)', en: 'Oatmeal Pro Bread', tr: 'Yulaflı Ekmek (Pro)', price: 75000, descFa: 'لاین سلامت؛ غنی شده با جو دوسر.', descEn: 'Health line; enriched with oats.', descTr: 'Sağlık serisi; yulaf ile zenginleştirilmiş.' }
-            ]
-        };
-
-        let cart = [];
-        const langs = ['fa', 'en', 'tr'];
-        let currentLangIndex = 0;
-        let lang = langs[currentLangIndex];
-        let currentItem = null;
-        let currentCatId = null;
-
-        // تابع کاملاً ایمن برای ویبره (جلوگیری از کرش)
-        function haptic(type = 10) {
-            try {
-                if (window.navigator && window.navigator.vibrate) {
-                    window.navigator.vibrate(type);
-                }
-            } catch (e) {
-                // نادیده گرفتن خطا روی سافاری
-            }
-        }
+            <p class="mi-desc" data-i="h2d">دابل شات اسپرسو روی آب داغ، ملایم و طولانی.</p>
+            <div class="mi-foot"><span class="mi-price cinzel-font" data-i="h2p">۵۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div>
+          </div>
+        </article>
         
-        // تابع اختصاصی و ۱۰۰٪ ایمن برای فرمت قیمت‌ها (جایگزین toLocaleString که روی سافاری کرش می‌کرد)
-        function formatPrice(num, currentLang) {
-            if (typeof num !== 'number') return num;
-            let str = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            if (currentLang === 'fa') {
-                const pd = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-                return str.replace(/\d/g, d => pd[parseInt(d)]);
-            }
-            return str;
-        }
+        <article class="mi rv clickable-item" data-item-id="h3" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=200&q=80" alt="Flat White" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">03</div><h3 class="mi-name cinzel-font" data-i="h3n">Flat White</h3><p class="mi-local" data-i="h3l">فلت وایت</p></div>
+            </div>
+            <p class="mi-desc" data-i="h3d">دو شات اسپرسو، میکروفوم ابریشمی — کرمی و قوی.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h3p">۶۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="h4" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&q=80" alt="Latte" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">04</div><h3 class="mi-name cinzel-font" data-i="h4n">Latte</h3><p class="mi-local" data-i="h4l">لاته</p></div>
+            </div>
+            <p class="mi-desc" data-i="h4d">اسپرسو ملایم با شیر بخارپز و فوم نرم.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h4p">۶۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="h5" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=200&q=80" alt="Persian Coffee" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">05</div><h3 class="mi-name cinzel-font" data-i="h5n">Persian Coffee</h3><p class="mi-local" data-i="h5l">قهوه اصیل ایرانی</p></div>
+            </div>
+            <p class="mi-desc" data-i="h5d">قهوه‌ای گرم و خوش‌عطر با رایحه هل؛ ساده، متفاوت و دلنشین.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h5p">۵۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="h6" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1620050858165-27a36c8be574?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1620050858165-27a36c8be574?w=200&q=80" alt="Cardamom Latte" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">06</div><h3 class="mi-name cinzel-font" data-i="h6n">Cardamom Latte</h3><p class="mi-local" data-i="h6l">لاته هل</p></div>
+            </div>
+            <p class="mi-desc" data-i="h6d">لاته‌ای نرم با رایحه هل؛ انتخابی خاص برای سلیقه‌های متفاوت.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h6p">۶۸٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+    
+    <div class="divider"><div class="dl"></div><div class="di">✦</div><div class="dl"></div></div>
+    
+    <!-- COLD -->
+    <section class="menu-inner" id="cold">
+      <div class="sec-head rv"><h2 class="sec-title cinzel-font" data-i="cold_title">نوشیدنی سرد</h2><div class="sec-orn"></div></div>
+      <div class="mgrid">
+        <article class="mi rv clickable-item" data-item-id="c1" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200&q=80" alt="Cold Brew" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">01</div><h3 class="mi-name cinzel-font" data-i="c1n">Cold Brew</h3><p class="mi-local" data-i="c1l">کولد برو</p></div>
+            </div>
+            <p class="mi-desc" data-i="c1d">دم‌آوری ۲۴ ساعته در آب سرد — طعمی صاف بدون تلخی.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="c1p">۶۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_cold">سرد</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="c2" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1517701550927-30cf0b081816?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1517701550927-30cf0b081816?w=200&q=80" alt="Iced Latte" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">02</div><h3 class="mi-name cinzel-font" data-i="c2n">Iced Latte</h3><p class="mi-local" data-i="c2l">آیس لاته</p></div>
+            </div>
+            <p class="mi-desc" data-i="c2d">اسپرسو تازه روی یخ، شیر کامل — ساده و بی‌نقص.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="c2p">۶۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_cold">سرد</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="c3" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1594631252845-29fc4fac8c76?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1594631252845-29fc4fac8c76?w=200&q=80" alt="Affogato" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">03</div><h3 class="mi-name cinzel-font" data-i="c3n">Affogato</h3><p class="mi-local" data-i="c3l">افوگاتو</p></div>
+            </div>
+            <p class="mi-desc" data-i="c3d">اسپرسو داغ روی بستنی وانیل — جایی که گرم و سرد هم می‌شوند.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="c3p">۸۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="tDes">دسر</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="c4" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1553177595-4de2bb0842b9?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1553177595-4de2bb0842b9?w=200&q=80" alt="Rose Cold Foam" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">04</div><h3 class="mi-name cinzel-font" data-i="c4n">Rose Cold Foam</h3><p class="mi-local" data-i="c4l">کولد فوم گل محمدی</p></div>
+            </div>
+            <p class="mi-desc" data-i="c4d">کولد برو با فوم ابریشمی گلاب — ظریف و عطرآگین.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="c4p">۸۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="c5" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1551030247-9750b329ebc8?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1551030247-9750b329ebc8?w=200&q=80" alt="Iced Americano" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">05</div><h3 class="mi-name cinzel-font" data-i="c5n">Iced Americano</h3><p class="mi-local" data-i="c5l">آیس آمریکانو</p></div>
+            </div>
+            <p class="mi-desc" data-i="c5d">اسپرسو و آب سرد روی یخ، خنک و نیروبخش.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="c5p">۵۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_cold">سرد</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="c6" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1595859702788-29367c30e9d6?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1595859702788-29367c30e9d6?w=200&q=80" alt="Sparkling Espresso" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">06</div><h3 class="mi-name cinzel-font" data-i="c6n">Sparkling Espresso</h3><p class="mi-local" data-i="c6l">اسپرسو گازدار</p></div>
+            </div>
+            <p class="mi-desc" data-i="c6d">اسپرسو روی آب گازدار با پوست لیمو — جسور و هیجان‌انگیز.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="c6p">۷۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="tUniq">خاص</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+    
+    <div class="divider"><div class="dl"></div><div class="di">✦</div><div class="dl"></div></div>
+    
+    <!-- BAKERY -->
+    <section class="menu-inner" id="bakery">
+      <div class="sec-head rv"><h2 class="sec-title cinzel-font" data-i="bak_title">نان و شیرینی</h2><div class="sec-orn"></div></div>
+      <div class="mgrid">
+        <article class="mi rv clickable-item" data-item-id="b1" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?w=200&q=80" alt="Saffron Croissant" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">01</div><h3 class="mi-name cinzel-font" data-i="b1n">Saffron Croissant</h3><p class="mi-local" data-i="b1l">کروسان زعفران</p></div>
+            </div>
+            <p class="mi-desc" data-i="b1d">کروسان کره‌ای ورقه‌ورقه با فیلینگ کرم زعفرانی اصیل.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="b1p">۵۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tFresh">تازه</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="b2" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1627308595229-7830f5c92f44?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1627308595229-7830f5c92f44?w=200&q=80" alt="Persian Breakfast" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">02</div><h3 class="mi-name cinzel-font" data-i="b2n">Persian Breakfast</h3><p class="mi-local" data-i="b2l">صبحانه درباری (بربری)</p></div>
+            </div>
+            <p class="mi-desc" data-i="b2d">نان بربری تازه با کره محلی، گردو و عسل طبیعی کوهستان.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="b2p">۸۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tTrad">سنتی</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="b3" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1514516345957-556ca8d90a29?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1514516345957-556ca8d90a29?w=200&q=80" alt="Almond Tart" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">03</div><h3 class="mi-name cinzel-font" data-i="b3n">Almond Tart</h3><p class="mi-local" data-i="b3l">تارت بادام</p></div>
+            </div>
+            <p class="mi-desc" data-i="b3d">پوسته کره‌ای ترد با فرانژیپان بادام و مربای زردآلو.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="b3p">۷۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_bak">شیرینی</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="b4" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=200&q=80" alt="Belgian Brownie" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">04</div><h3 class="mi-name cinzel-font" data-i="b4n">Belgian Brownie</h3><p class="mi-local" data-i="b4l">براونی شکلات تلخ</p></div>
+            </div>
+            <p class="mi-desc" data-i="b4d">براونی نرم با شکلات تلخ بلژیکی و بافتی مرطوب و غلیظ.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="b4p">۶۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_bak">شیرینی</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="b5" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=200&q=80" alt="Pistachio Roll" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">05</div><h3 class="mi-name cinzel-font" data-i="b5n">Pistachio Roll</h3><p class="mi-local" data-i="b5l">رول پسته</p></div>
+            </div>
+            <p class="mi-desc" data-i="b5d">خمیر دانمارکی پیچیده با کرم پسته ایرانی و رایحه گلاب.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="b5p">۶۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div>
+          </div>
+        </article>
+        
+        <article class="mi rv clickable-item" data-item-id="b6" tabindex="0" role="button" data-img="https://images.unsplash.com/photo-1549495116-2485c2c77609?w=600&q=80">
+          <div class="mi-content">
+            <div class="mi-top">
+              <div class="mi-thumb"><img src="https://images.unsplash.com/photo-1549495116-2485c2c77609?w=200&q=80" alt="Cinnamon Roll" loading="lazy"></div>
+              <div class="mi-title-box"><div class="mi-num cinzel-font">06</div><h3 class="mi-name cinzel-font" data-i="b6n">Cinnamon Roll</h3><p class="mi-local" data-i="b6l">رول دارچین</p></div>
+            </div>
+            <p class="mi-desc" data-i="b6d">رول دارچینی نرم و گرم با آیسینگ پنیر خامه‌ای.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="b6p">۵۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tFresh">تازه</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>
 
-        function toggleLang() {
-            currentLangIndex = (currentLangIndex + 1) % langs.length;
-            lang = langs[currentLangIndex];
-            
-            document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
-            document.documentElement.lang = lang;
-            document.getElementById('lang-toggle-btn').innerText = lang.toUpperCase();
-            
-            document.querySelectorAll('[data-fa]').forEach(el => {
-                const newText = el.getAttribute(`data-`);
-                el.innerText = newText ? newText : el.getAttribute('data-fa');
-            });
-            
-            const placeholders = {
-                'fa': 'نکته‌ای برای بهبود؟',
-                'en': 'Any suggestions for improvement?',
-                'tr': 'Geliştirmek için bir öneriniz var mı?'
-            };
-            document.getElementById('feedback').placeholder = placeholders[lang] || placeholders['fa'];
+<!-- Item Modal -->
+<div id="item-modal" class="modal-wrap" aria-hidden="true">
+  <div class="modal-bg" tabindex="-1"></div>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="modal-close" aria-label="بستن">✕</button>
+    <div class="modal-hero">
+      <img id="modal-img" src="" alt="Menu Item">
+    </div>
+    <div class="modal-content-wrap">
+      <h2 id="modal-title" class="modal-title cinzel-font"></h2>
+      <h3 id="modal-local" class="modal-local"></h3>
+      <p id="modal-desc" class="modal-desc"></p>
+      <div id="modal-price" class="modal-price cinzel-font"></div>
+      <button class="modal-btn" data-i="order_btn">بازگشت به منو</button>
+    </div>
+  </div>
+</div>
 
-            if(document.getElementById('cat-view').classList.contains('cat-active') && currentCatId) {
-                renderProducts(currentCatId);
-                const titles = {
-                    'hot': {fa: 'نوشیدنی گرم', en: 'Hot Beverages', tr: 'Sıcak İçecekler'},
-                    'cold': {fa: 'نوشیدنی سرد', en: 'Cold Beverages', tr: 'Soğuk İçecekler'},
-                    'bakery': {fa: 'نان و شیرینی', en: 'Boulangerie', tr: 'Fırın & Pastane'}
-                };
-                const currentCatTitle = titles[currentCatId];
-                if(currentCatTitle) {
-                    document.getElementById('view-title').innerText = currentCatTitle[lang] || currentCatTitle['fa'];
-                }
-            }
-            updateCartUI();
-            haptic(15);
-        }
+<!-- Premium Footer Redesign -->
+<footer>
+  <div class="f-brand-story">
+    <h2 class="cinzel-font">NAN DARBARI</h2>
+    <p class="f-slogan" data-i="f_slogan">درنگِ لحظه‌های ناب</p>
+    <p class="f-slogan-en cinzel-font" data-i="f_slogan_en">Crafted for quiet moments</p>
+  </div>
+  
+  <div class="f-info">
+    <div class="f-col">
+      <h3 data-i="f_loc">لوکیشن</h3>
+      <p data-i="footer_addr">تهران، خیابان فرشته، پلاک ۱۲</p>
+      <a href="#" style="color: var(--gold-light); font-size: 0.9rem; margin-top: 0.5rem;" data-i="f_map">مسیریابی روی نقشه</a>
+    </div>
+    <div class="f-col">
+      <h3 data-i="f_hrs">ساعات کاری</h3>
+      <p data-i="footer_hrs">هر روز ۰۸:۰۰ — ۲۳:۰۰</p>
+    </div>
+    <div class="f-col">
+      <h3 data-i="f_con">ارتباط با ما</h3>
+      <a href="tel:+9821000000" dir="ltr">۰۲۱-۰۰۰۰۰۰۰</a>
+      <a href="https://www.instagram.com/darbary_bread.coffee" target="_blank" dir="ltr">@darbary_bread.coffee</a>
+    </div>
+  </div>
 
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.glass-card');
-            const x = (window.innerWidth / 2 - e.pageX) / 30;
-            const y = (window.innerHeight / 2 - e.pageY) / 30;
-            cards.forEach(card => card.style.transform = `translateZ(0) rotateY(deg) rotateX(${-y}deg)`);
+  <div class="f-copy">&copy; 2024 Nan Darbari. <span data-i="f_rights">تمامی حقوق محفوظ است.</span></div>
+</footer>
+
+<script>
+// --- Real Translations Added for AR & TR ---
+const T = {
+  fa: {
+    hero_lbl:'NAN DARBARI', skip:'مشاهده منو',
+    nav_hot:'نوشیدنی گرم', nav_cold:'نوشیدنی سرد', nav_bakery:'نان و شیرینی',
+    about_title:'اینجا فقط یک کافه نیست', about_desc:'نان درباری جایی است برای نان تازه، شیرینی گرم، قهوه خوش‌طعم و چند دقیقه آرامش.',
+    cat_hot:'گرم', cat_cold:'سرد', cat_bak:'نان و شیرینی', hot_title:'نوشیدنی گرم', cold_title:'نوشیدنی سرد', bak_title:'نان و شیرینی',
+    f_slogan: 'درنگِ لحظه‌های ناب', f_slogan_en: 'Crafted for quiet moments', f_map: 'مسیریابی روی نقشه', f_rights: 'تمامی حقوق محفوظ است.',
+    f_loc:'لوکیشن', f_hrs:'ساعات کاری', f_con:'ارتباط با ما', f_insta:'اینستاگرام', order_btn:'بازگشت به منو',
+    footer_addr:'تهران، خیابان فرشته، پلاک ۱۲', footer_hrs:'هر روز ۰۸:۰۰ — ۲۳:۰۰',
+    h1n:'Espresso', h1l:'اسپرسو', h1d:'اسپرسوی غلیظ و خوش‌عطر، مناسب شروع یک روز جدی.', h1p:'۴۵٬۰۰۰ تومان',
+    h2n:'Americano', h2l:'آمریکانو', h2d:'دابل شات اسپرسو روی آب داغ، ملایم و طولانی.', h2p:'۵۰٬۰۰۰ تومان',
+    h3n:'Flat White', h3l:'فلت وایت', h3d:'دو شات اسپرسو، میکروفوم ابریشمی — کرمی و قوی.', h3p:'۶۵٬۰۰۰ تومان',
+    h4n:'Latte', h4l:'لاته', h4d:'اسپرسو ملایم با شیر بخارپز و فوم نرم.', h4p:'۶۰٬۰۰۰ تومان',
+    h5n:'Persian Coffee', h5l:'قهوه اصیل ایرانی', h5d:'قهوه‌ای گرم و خوش‌عطر با رایحه هل؛ ساده، متفاوت و دلنشین.', h5p:'۵۵٬۰۰۰ تومان',
+    h6n:'Cardamom Latte', h6l:'لاته هل', h6d:'لاته‌ای نرم با رایحه هل؛ انتخابی خاص برای سلیقه‌های متفاوت.', h6p:'۶۸٬۰۰۰ تومان',
+    c1n:'Cold Brew', c1l:'کولد برو', c1d:'دم‌آوری ۲۴ ساعته در آب سرد — طعمی صاف بدون تلخی.', c1p:'۶۵٬۰۰۰ تومان',
+    c2n:'Iced Latte', c2l:'آیس لاته', c2d:'اسپرسو تازه روی یخ، شیر کامل — ساده و بی‌نقص.', c2p:'۶۰٬۰۰۰ تومان',
+    c3n:'Affogato', c3l:'افوگاتو', c3d:'اسپرسو داغ روی بستنی وانیل — جایی که گرم و سرد هم می‌شوند.', c3p:'۸۰٬۰۰۰ تومان',
+    c4n:'Rose Cold Foam', c4l:'کولد فوم گل محمدی', c4d:'کولد برو با فوم ابریشمی گلاب — ظریف و عطرآگین.', c4p:'۸۵٬۰۰۰ تومان',
+    c5n:'Iced Americano', c5l:'آیس آمریکانو', c5d:'اسپرسو و آب سرد روی یخ، خنک و نیروبخش.', c5p:'۵۵٬۰۰۰ تومان',
+    c6n:'Sparkling Espresso', c6l:'اسپرسو گازدار', c6d:'اسپرسو روی آب گازدار با پوست لیمو — جسور و هیجان‌انگیز.', c6p:'۷۰٬۰۰۰ تومان',
+    b1n:'Saffron Croissant', b1l:'کروسان زعفران', b1d:'کروسان کره‌ای ورقه‌ورقه با فیلینگ کرم زعفرانی اصیل.', b1p:'۵۵٬۰۰۰ تومان',
+    b2n:'Persian Breakfast', b2l:'صبحانه درباری (بربری)', b2d:'نان بربری تازه با کره محلی، گردو و عسل طبیعی کوهستان.', b2p:'۸۵٬۰۰۰ تومان',
+    b3n:'Almond Tart', b3l:'تارت بادام', b3d:'پوسته کره‌ای ترد با فرانژیپان بادام و مربای زردآلو.', b3p:'۷۰٬۰۰۰ تومان',
+    b4n:'Belgian Brownie', b4l:'براونی شکلات تلخ', b4d:'براونی نرم با شکلات تلخ بلژیکی و بافتی مرطوب و غلیظ.', b4p:'۶۰٬۰۰۰ تومان',
+    b5n:'Pistachio Roll', b5l:'رول پسته', b5d:'خمیر دانمارکی پیچیده با کرم پسته ایرانی و رایحه گلاب.', b5p:'۶۵٬۰۰۰ تومان',
+    b6n:'Cinnamon Roll', b6l:'رول دارچین', b6d:'رول دارچینی نرم و گرم با آیسینگ پنیر خامه‌ای.', b6p:'۵۵٬۰۰۰ تومان',
+    tSig:'امضا', tDes:'دسر', tUniq:'خاص', tFresh:'تازه', tTrad:'سنتی'
+  },
+  en: {
+    hero_lbl:'NAN DARBARI', skip:'View Menu',
+    nav_hot:'Hot Drinks', nav_cold:'Cold Drinks', nav_bakery:'Bakery & Pastry',
+    about_title:'More Than Just a Cafe', about_desc:'Nan Darbari is a place for fresh bread, warm pastries, flavorful coffee, and a few minutes of peace.',
+    cat_hot:'Hot', cat_cold:'Cold', cat_bak:'Bakery', hot_title:'Hot Drinks', cold_title:'Cold Drinks', bak_title:'Bakery & Pastry',
+    f_slogan: 'Crafted for quiet moments', f_slogan_en: 'Est. 2024', f_map: 'View on Maps', f_rights: 'All rights reserved.',
+    f_loc:'Location', f_hrs:'Hours', f_con:'Contact Us', f_insta:'Instagram', order_btn:'Close & Return',
+    footer_addr:'12 Fereshteh St, Tehran', footer_hrs:'Everyday 08:00 — 23:00',
+    h1n:'Espresso', h1l:'Espresso', h1d:'Rich and aromatic espresso, perfect for a serious start.', h1p:'45,000 T',
+    h2n:'Americano', h2l:'Americano', h2d:'Double espresso over hot water, smooth and prolonged.', h2p:'50,000 T',
+    h3n:'Flat White', h3l:'Flat White', h3d:'Double shot, silky microfoam — creamy and strong.', h3p:'65,000 T',
+    h4n:'Latte', h4l:'Latte', h4d:'Smooth espresso with steamed milk and soft foam.', h4p:'60,000 T',
+    h5n:'Persian Coffee', h5l:'Persian Coffee', h5d:'Warm and aromatic coffee with cardamom.', h5p:'55,000 T',
+    h6n:'Cardamom Latte', h6l:'Cardamom Latte', h6d:'Soft latte with cardamom scent.', h6p:'68,000 T',
+    c1n:'Cold Brew', c1l:'Cold Brew', c1d:'24-hour cold steep — smooth and clean.', c1p:'65,000 T',
+    c2n:'Iced Latte', c2l:'Iced Latte', c2d:'Fresh espresso over ice, whole milk.', c2p:'60,000 T',
+    c3n:'Affogato', c3l:'Affogato', c3d:'Hot espresso over vanilla ice cream.', c3p:'80,000 T',
+    c4n:'Rose Cold Foam', c4l:'Rose Cold Foam', c4d:'Cold brew with silky rose water cold foam.', c4p:'85,000 T',
+    c5n:'Iced Americano', c5l:'Iced Americano', c5d:'Espresso and cold water over ice.', c5p:'55,000 T',
+    c6n:'Sparkling Espresso', c6l:'Sparkling Espresso', c6d:'Espresso over sparkling water.', c6p:'70,000 T',
+    b1n:'Saffron Croissant', b1l:'Saffron Croissant', b1d:'Flaky buttery croissant filled with authentic saffron cream.', b1p:'55,000 T',
+    b2n:'Persian Breakfast', b2l:'Barbari Breakfast', b2d:'Fresh Barbari bread with local butter and honey.', b2p:'85,000 T',
+    b3n:'Almond Tart', b3l:'Almond Tart', b3d:'Buttery pastry shell with almond frangipane.', b3p:'70,000 T',
+    b4n:'Belgian Brownie', b4l:'Dark Choc Brownie', b4d:'Soft brownie with Belgian dark chocolate.', b4p:'60,000 T',
+    b5n:'Pistachio Roll', b5l:'Pistachio Roll', b5d:'Danish pastry rolled with Iranian pistachio cream.', b5p:'65,000 T',
+    b6n:'Cinnamon Roll', b6l:'Cinnamon Roll', b6d:'Warm, soft cinnamon roll topped with cream cheese icing.', b6p:'55,000 T',
+    tSig:'Signature', tDes:'Dessert', tUniq:'Unique', tFresh:'Fresh', tTrad:'Traditional'
+  },
+  ar: {
+    hero_lbl:'NAN DARBARI', skip:'عرض القائمة',
+    nav_hot:'مشروبات ساخنة', nav_cold:'مشروبات باردة', nav_bakery:'مخبوزات',
+    about_title:'أكثر من مجرد مقهى', about_desc:'نان درباري هو مكان للخبز الطازج والمعجنات الدافئة والقهوة اللذيذة ولحظات من الهدوء.',
+    cat_hot:'ساخن', cat_cold:'بارد', cat_bak:'مخبوزات', hot_title:'مشروبات ساخنة', cold_title:'مشروبات باردة', bak_title:'مخبوزات',
+    f_slogan: 'صُنعت للحظات الهادئة', f_slogan_en: 'Crafted for quiet moments', f_map: 'عرض على الخريطة', f_rights: 'جميع الحقوق محفوظة.',
+    f_loc:'الموقع', f_hrs:'ساعات العمل', f_con:'اتصل بنا', f_insta:'انستغرام', order_btn:'العودة للقائمة',
+    footer_addr:'طهران، شارع فرشته، رقم 12', footer_hrs:'يومياً 08:00 — 23:00',
+    h1n:'Espresso', h1l:'اسبريسو', h1d:'اسبريسو غني وعطري، بداية مثالية ליوم جدي.', h1p:'45,000 تومان',
+    h2n:'Americano', h2l:'أمريكانو', h2d:'دبل اسبريسو مع الماء الساخن، خفيف وطويل.', h2p:'50,000 تومان',
+    h3n:'Flat White', h3l:'فلات وايت', h3d:'دبل شوت مع رغوة حليب ناعمة.', h3p:'65,000 تومان',
+    h4n:'Latte', h4l:'لاتيه', h4d:'اسبريسو خفيف مع حليب مبخر ورغوة.', h4p:'60,000 تومان',
+    h5n:'Persian Coffee', h5l:'قهوة إيرانية', h5d:'قهوة دافئة وعطرية برائحة الهيل.', h5p:'55,000 تومان',
+    h6n:'Cardamom Latte', h6l:'لاتيه بالهيل', h6d:'لاتيه ناعم برائحة الهيل، اختيار خاص.', h6p:'68,000 تومان',
+    c1n:'Cold Brew', c1l:'كولد برو', c1d:'مُحضرة بالماء البارد لمدة 24 ساعة.', c1p:'65,000 تومان',
+    c2n:'Iced Latte', c2l:'آيس لاتيه', c2d:'اسبريسو طازج على الثلج مع الحليب.', c2p:'60,000 تومان',
+    c3n:'Affogato', c3l:'أفوغاتو', c3d:'اسبريسو ساخن على آيس كريم الفانيليا.', c3p:'80,000 تومان',
+    c4n:'Rose Cold Foam', c4l:'رغوة الورد الباردة', c4d:'كولد برو مع رغوة ماء الورد.', c4p:'85,000 تومان',
+    c5n:'Iced Americano', c5l:'آيس أمريكانو', c5d:'اسبريسو وماء بارد على الثلج.', c5p:'55,000 تومان',
+    c6n:'Sparkling Espresso', c6l:'اسبريسو فوار', c6d:'اسبريسو على ماء فوار مع قشر الليمون.', c6p:'70,000 تومان',
+    b1n:'Saffron Croissant', b1l:'كرواسون بالزعفران', b1d:'كرواسون هش محشو بكريمة الزعفران.', b1p:'55,000 تومان',
+    b2n:'Persian Breakfast', b2l:'فطور إيراني (بربري)', b2d:'خبز بربري طازج مع زبدة محلية وعسل.', b2p:'85,000 تومان',
+    b3n:'Almond Tart', b3l:'تارت اللوز', b3d:'قشرة زبدة مقرمشة مع حشوة اللوز.', b3p:'70,000 تومان',
+    b4n:'Belgian Brownie', b4l:'براوني بلجيكي', b4d:'براوني طري بشوكولاتة بلجيكية داكنة.', b4p:'60,000 تومان',
+    b5n:'Pistachio Roll', b5l:'رول الفستق', b5d:'عجينة دنماركية مع كريمة الفستق الإيراني.', b5p:'65,000 تومان',
+    b6n:'Cinnamon Roll', b6l:'رول القرفة', b6d:'رول قرفة ناعم ودافئ.', b6p:'55,000 تومان',
+    tSig:'مميز', tDes:'حلوى', tUniq:'فريد', tFresh:'طازج', tTrad:'تقليدي'
+  },
+  tr: {
+    hero_lbl:'NAN DARBARI', skip:'Menüyü Gör',
+    nav_hot:'Sıcak İçecekler', nav_cold:'Soğuk İçecekler', nav_bakery:'Fırın & Pasta',
+    about_title:'Bir Kafeden Çok Daha Fazlası', about_desc:'Nan Darbari, taze ekmek, sıcak hamur işleri, lezzetli kahve ve huzur için bir yer.',
+    cat_hot:'Sıcak', cat_cold:'Soğuk', cat_bak:'Fırın', hot_title:'Sıcak İçecekler', cold_title:'Soğuk İçecekler', bak_title:'Fırın & Pasta',
+    f_slogan: 'Sakin anlar için özenle hazırlandı', f_slogan_en: 'Crafted for quiet moments', f_map: 'Haritada Gör', f_rights: 'Tüm hakları saklıdır.',
+    f_loc:'Konum', f_hrs:'Çalışma Saatleri', f_con:'İletişim', f_insta:'Instagram', order_btn:'Menüye Dön',
+    footer_addr:'12 Fereshteh St, Tahran', footer_hrs:'Her gün 08:00 — 23:00',
+    h1n:'Espresso', h1l:'Espresso', h1d:'Yoğun ve aromatik, ciddi bir başlangıç için mükemmel.', h1p:'45,000 Tümen',
+    h2n:'Americano', h2l:'Americano', h2d:'Sıcak su üzerine double espresso, yumuşak.', h2p:'50,000 Tümen',
+    h3n:'Flat White', h3l:'Flat White', h3d:'Double shot, ipeksi mikro köpük.', h3p:'65,000 Tümen',
+    h4n:'Latte', h4l:'Latte', h4d:'Buharda pişirilmiş süt ve yumuşak köpüklü espresso.', h4p:'60,000 Tümen',
+    h5n:'Persian Coffee', h5l:'Fars Kahvesi', h5d:'Kakule kokulu sıcak ve aromatik kahve.', h5p:'55,000 Tümen',
+    h6n:'Cardamom Latte', h6l:'Kakuleli Latte', h6d:'Kakule kokulu yumuşak latte, özel bir seçim.', h6p:'68,000 Tümen',
+    c1n:'Cold Brew', c1l:'Cold Brew', c1d:'Soğuk suda 24 saat demlenmiş, pürüzsüz tat.', c1p:'65,000 Tümen',
+    c2n:'Iced Latte', c2l:'Buzlu Latte', c2d:'Buz üzerine taze espresso ve tam yağlı süt.', c2p:'60,000 Tümen',
+    c3n:'Affogato', c3l:'Affogato', c3d:'Vanilyalı dondurma üzerine sıcak espresso.', c3p:'80,000 Tümen',
+    c4n:'Rose Cold Foam', c4l:'Güllü Soğuk Köpük', c4d:'Gül sulu soğuk köpüklü cold brew.', c4p:'85,000 Tümen',
+    c5n:'Iced Americano', c5l:'Buzlu Americano', c5d:'Buz üzerinde espresso ve soğuk su.', c5p:'55,000 Tümen',
+    c6n:'Sparkling Espresso', c6l:'Maden Sulu Espresso', c6d:'Limon kabuğu ile maden suyu üzerinde espresso.', c6p:'70,000 Tümen',
+    b1n:'Saffron Croissant', b1l:'Safranlı Kruvasan', b1d:'Otantik safran kreması dolgulu tereyağlı kruvasan.', b1p:'55,000 Tümen',
+    b2n:'Persian Breakfast', b2l:'İran Kahvaltısı (Barbari)', b2d:'Yerel tereyağı ve bal ile taze Barbari ekmeği.', b2p:'85,000 Tümen',
+    b3n:'Almond Tart', b3l:'Bademli Tart', b3d:'Badem frangipane ile çıtır tereyağlı hamur.', b3p:'70,000 Tümen',
+    b4n:'Belgian Brownie', b4l:'Belçika Brownie', b4d:'Belçika bitter çikolatalı yumuşak brownie.', b4p:'60,000 Tümen',
+    b5n:'Pistachio Roll', b5l:'Fıstıklı Rulo', b5d:'İran fıstık kreması ile sarılmış Danimarka hamur işi.', b5p:'65,000 Tümen',
+    b6n:'Cinnamon Roll', b6l:'Tarçınlı Rulo', b6d:'Krem peynir soslu sıcak, yumuşak tarçınlı rulo.', b6p:'55,000 Tümen',
+    tSig:'İmza', tDes:'Tatlı', tUniq:'Eşsiz', tFresh:'Taze', tTrad:'Geleneksel'
+  }
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+  
+  // Custom Cursor
+  const cursor = document.getElementById('cur');
+  const cursorRing = document.getElementById('cur-ring');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  if (window.matchMedia("(pointer: fine)").matches) {
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    });
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.2;
+      ringY += (mouseY - ringY) * 0.2;
+      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(renderCursor);
+    }
+    requestAnimationFrame(renderCursor);
+
+    const clickables = document.querySelectorAll('button, a, .clickable-item, .lb, [role="button"]');
+    clickables.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+  }
+
+  // Animation Observers
+  setTimeout(() => { document.querySelectorAll('.rv').forEach(el => el.classList.add('vis')); }, 800);
+  if ('IntersectionObserver' in window) {
+    const rvObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05, rootMargin: "50px" });
+    document.querySelectorAll('.rv').forEach(e => rvObs.observe(e));
+  }
+
+  // --- Clean JS Event Handlers (No Inline HTML JS) ---
+  const modal = document.getElementById('item-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalLocal = document.getElementById('modal-local');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalPrice = document.getElementById('modal-price');
+  const modalImg = document.getElementById('modal-img');
+
+  function openModal(id, imgSrc) {
+    const lang = document.documentElement.lang || 'fa';
+    const t = T[lang] || T['fa'];
+    
+    modalTitle.textContent = t[id+'n'] || '';
+    modalLocal.textContent = t[id+'l'] || '';
+    modalDesc.textContent = t[id+'d'] || '';
+    modalPrice.textContent = t[id+'p'] || '';
+    if(imgSrc) modalImg.src = imgSrc;
+    
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    
+    // Focus management for accessibility
+    setTimeout(() => { document.querySelector('.modal-close').focus(); }, 100);
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  // Attach modal close handlers
+  document.querySelectorAll('.modal-close, .modal-bg, .modal-btn').forEach(el => {
+    el.addEventListener('click', closeModal);
+  });
+  
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Attach Accessibility (A11y) & click handlers to cards
+  document.querySelectorAll('.clickable-item').forEach(card => {
+    // Mouse Click
+    card.addEventListener('click', () => {
+      const id = card.getAttribute('data-item-id');
+      const imgSrc = card.getAttribute('data-img');
+      if(id) openModal(id, imgSrc);
+    });
+    // Keyboard (Enter or Space)
+    card.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const id = card.getAttribute('data-item-id');
+        const imgSrc = card.getAttribute('data-img');
+        if(id) openModal(id, imgSrc);
+      }
+    });
+  });
+
+  // --- Cinematic Scroll System ---
+  let isCinematicScrolling = false;
+  
+  function blockManualScroll(e) { if (isCinematicScrolling) e.preventDefault(); }
+  window.addEventListener('wheel', blockManualScroll, { passive: false });
+  window.addEventListener('touchmove', blockManualScroll, { passive: false });
+
+  function smoothCinematicScrollWithPause(finalY) {
+    if(isCinematicScrolling) return; 
+    isCinematicScrolling = true;
+
+    const startY = window.scrollY || window.pageYOffset;
+    const wrap = document.getElementById('cinematic-wrap');
+    const maxCinematicScroll = wrap.offsetHeight - window.innerHeight;
+    const logoY = maxCinematicScroll * 0.90; 
+
+    const phase1Duration = 2200; 
+    const pauseDuration = 900;   
+    const phase2Duration = 1500; 
+    const totalDuration = phase1Duration + pauseDuration + phase2Duration;
+    
+    let startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const timeElapsed = timestamp - startTime;
+      let currentY = startY;
+
+      if (timeElapsed <= phase1Duration) {
+        let progress = timeElapsed / phase1Duration;
+        let ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        currentY = startY + (logoY - startY) * ease;
+      } 
+      else if (timeElapsed > phase1Duration && timeElapsed <= (phase1Duration + pauseDuration)) {
+        currentY = logoY; 
+      } 
+      else if (timeElapsed > (phase1Duration + pauseDuration) && timeElapsed <= totalDuration) {
+        let phase3Elapsed = timeElapsed - (phase1Duration + pauseDuration);
+        let progress = phase3Elapsed / phase2Duration;
+        let ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        currentY = logoY + (finalY - logoY) * ease;
+      } 
+      else {
+        currentY = finalY;
+      }
+
+      window.scrollTo(0, currentY);
+      if (timeElapsed < totalDuration) window.requestAnimationFrame(step);
+      else isCinematicScrolling = false; 
+    }
+    window.requestAnimationFrame(step);
+  }
+
+  const skipMenuBtn = document.getElementById('skip-menu');
+  if(skipMenuBtn){
+    skipMenuBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const menu = document.getElementById('about-brand');
+      if(menu) {
+        const targetY = menu.getBoundingClientRect().top + window.scrollY;
+        smoothCinematicScrollWithPause(targetY);
+      }
+    });
+  }
+
+  // --- Sticky Navigation Logic ---
+  const gnavBtns = document.querySelectorAll('.gn-btn');
+  const pill = document.getElementById('gnav-pill');
+  const innerNav = document.querySelector('.gnav-inner');
+
+  function movePillTo(btn){
+    if(!pill || !btn || !innerNav) return;
+    const innerRect = innerNav.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    pill.style.left = (btnRect.left - innerRect.left) + 'px';
+    pill.style.width = btnRect.width + 'px';
+  }
+
+  gnavBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      gnavBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); movePillTo(btn);
+      const target = document.getElementById(btn.dataset.target);
+      if(target) {
+        const offset = window.innerWidth < 850 ? 60 : 120;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({top: top, behavior: 'smooth'});
+      }
+    });
+  });
+
+  function updateActiveNav(){
+    let currentId = 'hot';
+    const sections = ['hot', 'cold', 'bakery'];
+    const triggerPoint = window.innerHeight * 0.5; 
+    
+    for(let i = sections.length - 1; i >= 0; i--){
+      const section = document.getElementById(sections[i]);
+      if(section) {
+        const rect = section.getBoundingClientRect();
+        if(rect.top <= triggerPoint) { currentId = sections[i]; break; }
+      }
+    }
+    gnavBtns.forEach(btn => {
+      const isActive = btn.dataset.target === currentId;
+      btn.classList.toggle('active', isActive);
+      if(isActive) movePillTo(btn);
+    });
+  }
+
+  // --- HTML5 Canvas Cinematic Render ---
+  const canvas = document.getElementById('c');
+  let ctx, W, H, dpr;
+  let isCanvasActive = true;
+  let targetScroll = 0, currentScroll = 0;
+
+  function getScrollP(){
+    const wrap = document.getElementById('cinematic-wrap'); if (!wrap) return 0;
+    const maxScroll = wrap.offsetHeight - window.innerHeight; if(maxScroll <= 0) return 0;
+    return Math.max(0, Math.min(1, (window.scrollY || window.pageYOffset) / maxScroll));
+  }
+  
+  targetScroll = getScrollP(); currentScroll = targetScroll;
+
+  if(canvas) {
+    ctx = canvas.getContext('2d', { alpha: false });
+    function resize(){ 
+      dpr = window.devicePixelRatio || 1;
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); 
+    }
+    resize(); window.addEventListener('resize', resize);
+    if('IntersectionObserver' in window) {
+      const canvasObs = new IntersectionObserver(entries => { isCanvasActive = entries[0].isIntersecting; });
+      canvasObs.observe(document.getElementById('cinematic-wrap'));
+    }
+  }
+
+  const C = { bg: [2, 4, 9], bgMid: [8, 16, 30], gold: [212, 175, 55], goldDim: [117, 94, 29], bean1: [212, 175, 55], bean2: [117, 94, 29], bean3: [30, 20, 10] };
+  function rgb(c,a=1){return `rgba(${c[0]},${c[1]},${c[2]},${a})`;}
+  function createGlow(x, y, r, alpha) { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(212, 175, 55, ${alpha})`); g.addColorStop(0.3, `rgba(212, 175, 55, ${alpha * 0.4})`); g.addColorStop(1, 'rgba(212, 175, 55, 0)'); return g; }
+
+  function drawBean(x, y, sz, angle, alpha) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.globalAlpha = alpha;
+    ctx.beginPath(); ctx.ellipse(0, 0, sz * 0.52, sz, 0, 0, Math.PI * 2);
+    const g = ctx.createRadialGradient(-sz * 0.15, -sz * 0.25, sz * 0.05, 0, 0, sz);
+    g.addColorStop(0, rgb(C.bean1)); g.addColorStop(0.4, rgb(C.bean2)); g.addColorStop(1, rgb(C.bean3));
+    ctx.fillStyle = g; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(0, -sz * 0.7); ctx.bezierCurveTo(sz * 0.1, -sz * 0.25, sz * 0.1, sz * 0.25, 0, sz * 0.7);
+    ctx.strokeStyle = 'rgba(10,5,2,0.8)'; ctx.lineWidth = sz * 0.06; ctx.stroke(); ctx.restore();
+  }
+
+  function drawCup(cx, cy, fillPct, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx, cy); ctx.scale(1.15, 1.15); ctx.translate(-cx, -cy);
+    const w = 110, h = 100; 
+    const sg = ctx.createRadialGradient(cx, cy + h/2 + 10, 0, cx, cy + h/2 + 10, w/2 + 25);
+    sg.addColorStop(0, rgb(C.gold, 0.2)); sg.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.ellipse(cx, cy + h/2 + 10, w/2 + 22, 10, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx - w/2, cy - h/2); ctx.lineTo(cx - w/2 + 16, cy + h/2); ctx.lineTo(cx + w/2 - 16, cy + h/2); ctx.lineTo(cx + w/2, cy - h/2); ctx.closePath();
+    const bg = ctx.createLinearGradient(cx - w/2, 0, cx + w/2, 0);
+    bg.addColorStop(0, '#03060C'); bg.addColorStop(0.3, '#0A1220'); bg.addColorStop(0.7, '#0A1220'); bg.addColorStop(1, '#03060C');
+    ctx.fillStyle = bg; ctx.fill(); ctx.strokeStyle = rgb(C.gold, 0.4); ctx.lineWidth = 1.5; ctx.stroke();
+
+    if (fillPct > 0) {
+      const lh = Math.max(4, (h - 10) * fillPct), ly = cy + h/2 - 5 - lh, tw = (w - 32) * (1 - fillPct * 0.5) + 16; 
+      ctx.beginPath(); ctx.moveTo(cx - tw/2, ly); ctx.lineTo(cx + tw/2, ly); ctx.lineTo(cx + w/2 - 18, cy + h/2 - 5); ctx.lineTo(cx - w/2 + 18, cy + h/2 - 5); ctx.closePath();
+      const lg = ctx.createLinearGradient(0, ly, 0, cy + h/2); lg.addColorStop(0, 'rgba(25, 18, 8, 0.95)'); lg.addColorStop(1, 'rgba(5, 3, 1, 0.98)'); ctx.fillStyle = lg; ctx.fill();
+      ctx.beginPath(); ctx.ellipse(cx, ly + 3, tw/2 - 3, 5, 0, 0, Math.PI*2);
+      const cg = ctx.createRadialGradient(cx - 8, ly, 0, cx, ly + 3, tw/2);
+      cg.addColorStop(0, rgb(C.gold, 0.8)); cg.addColorStop(0.4, rgb(C.goldDim, 0.5)); cg.addColorStop(1, rgb(C.gold, 0.15)); ctx.fillStyle = cg; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(cx + w/2 + 14, cy + 5, 22, -0.6, 0.6); ctx.strokeStyle = rgb(C.gold, 0.6); ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.stroke(); ctx.restore();
+  }
+
+  function drawSteam(cx, cy, alpha) {
+    for (let i = 0; i < 4; i++) {
+      const ox = (i - 1.5) * 22, t = Date.now() * 0.0008; ctx.save(); ctx.globalAlpha = Math.max(0, alpha * 0.4); ctx.beginPath();
+      ctx.moveTo(cx + ox, cy); ctx.bezierCurveTo(cx + ox + Math.sin(t + i) * 15, cy - 60, cx + ox - Math.sin(t + i + 1) * 15, cy - 120, cx + ox, cy - 160);
+      const sg = ctx.createLinearGradient(0, cy, 0, cy - 160); sg.addColorStop(0, rgb(C.gold, 0.7)); sg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.strokeStyle = sg; ctx.lineWidth = 8 + i * 1.5; ctx.stroke(); ctx.restore();
+    }
+  }
+
+  const BOKEH = [];
+  const bokehCount = window.innerWidth < 768 ? 6 : 14; 
+  for(let i=0; i < bokehCount; i++){ BOKEH.push({ x: Math.random(), y: Math.random(), s: 3 + Math.random()*12, vy: -0.0005 - Math.random()*0.0015, vx: (Math.random()-0.5)*0.0005, phase: Math.random()*Math.PI*2 }); }
+
+  let tick = 0;
+  const startUI = document.getElementById('start-ui');
+  const glassNav = document.getElementById('glass-nav');
+  let navShown = false;
+
+  window.addEventListener('scroll', () => {
+    targetScroll = getScrollP();
+    if(startUI) {
+      if(targetScroll > 0.08) startUI.classList.add('hidden');
+      else startUI.classList.remove('hidden');
+    }
+    const progBar = document.getElementById('prog-bar');
+    if(progBar) progBar.style.width = (targetScroll*100) + '%';
+    if(targetScroll >= 0.45 && !navShown){ navShown=true; if(glassNav) glassNav.classList.add('show'); }
+    else if(targetScroll < 0.45 && navShown){ navShown=false; if(glassNav) glassNav.classList.remove('show'); }
+    updateActiveNav();
+  }, { passive: true }); 
+
+  function render(){
+    if(ctx && isCanvasActive) {
+      tick++;
+      currentScroll += (targetScroll - currentScroll) * 0.07; 
+      const sp = currentScroll;
+      
+      ctx.fillStyle = rgb(C.bg); 
+      ctx.fillRect(0,0,W,H);
+
+      if (sp < 0.6) {
+        let p = Math.min(1, sp / 0.5); 
+        const gr = ctx.createRadialGradient(W/2, H*0.5, 0, W/2, H*0.5, Math.max(W,H));
+        gr.addColorStop(0, rgb(C.gold, 0.18 * (1-p)));
+        gr.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = gr; 
+        ctx.fillRect(0,0,W,H);
+        
+        let sz = 38 + (p * 110); 
+        let angle = Math.PI*0.1 + (p * Math.PI * 2); 
+        let alpha = p < 0.7 ? 1 : Math.max(0, 1 - ((p-0.7)/0.3)); 
+        let yPos = H*0.5 + (p * H*0.1); 
+        if (alpha > 0) drawBean(W/2, yPos, sz, angle, alpha);
+      }
+
+      if (sp > 0.1 && sp < 0.9) {
+        let p = (sp - 0.1) / 0.8; 
+        let bokehAlpha = Math.sin(p * Math.PI); 
+        BOKEH.forEach(b => {
+          b.y += b.vy; b.x += b.vx; if(b.y < -0.1) b.y = 1.1; if(b.x < -0.1) b.x = 1.1; if(b.x > 1.1) b.x = -0.1;
+          const alpha = (0.15 + Math.sin(tick*0.02 + b.phase)*0.1) * bokehAlpha;
+          ctx.beginPath(); ctx.arc(b.x*W, b.y*H, b.s, 0, Math.PI*2); ctx.fillStyle = createGlow(b.x*W, b.y*H, b.s*2, alpha); ctx.fill();
         });
+      }
 
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', (e) => {
-                const cards = document.querySelectorAll('.glass-card');
-                const x = e.gamma ? e.gamma / 4 : 0; 
-                const y = e.beta ? (e.beta - 45) / 4 : 0;
-                cards.forEach(card => card.style.transform = `translateZ(0) rotateY(deg) rotateX(deg)`);
-            }, true);
-        }
-
-        function openCat(id, color, titleFa, titleEn, titleTr) {
-            haptic(15);
-            currentCatId = id;
-            document.getElementById('blob1').style.background = color;
-            document.getElementById('home-view').className = 'page-view home-inactive';
-            document.getElementById('cat-view').className = 'page-view cat-active';
-            
-            const titles = {'fa': titleFa, 'en': titleEn, 'tr': titleTr};
-            document.getElementById('view-title').innerText = titles[lang] || titles['fa'];
-            
-            renderProducts(id);
-        }
-
-        function renderProducts(id) {
-            const list = document.getElementById('product-list');
-            list.innerHTML = '';
-            
-            if(!productsDB[id]) return;
-
-            productsDB[id].forEach(p => {
-                const name = p[lang] || p['fa'] || 'آیتم'; 
-                const priceStr = formatPrice(p.price, lang);
-
-                list.innerHTML += `
-                    <div class="product-item" onclick="openProduct('')">
-                        <div class="p-img-box">D</div>
-                        <div class="p-meta">
-                            <div class="p-name"></div>
-                            <div class="p-price"></div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function goHome() {
-            haptic(10);
-            currentCatId = null;
-            document.getElementById('blob1').style.background = '#c5a059';
-            document.getElementById('home-view').className = 'page-view home-active';
-            document.getElementById('cat-view').className = 'page-view cat-hidden';
-        }
-
-        function openProduct(pid) {
-            haptic(10);
-            
-            let p = null;
-            for(const cat in productsDB) {
-                const found = productsDB[cat].find(item => item.id === pid);
-                if(found) p = found;
-            }
-            
-            if(!p) return; 
-            
-            currentItem = p; 
-            
-            const name = p[lang] || p['fa'] || 'آیتم';
-            document.getElementById('m-name').innerText = name;
-            
-            const currency = {'fa': ' تومان', 'en': ' T', 'tr': ' T'};
-            const priceStr = formatPrice(p.price, lang);
-            document.getElementById('m-price').innerText = priceStr + (currency[lang] || ' تومان');
-            
-            const descKeys = {'fa': 'descFa', 'en': 'descEn', 'tr': 'descTr'};
-            const desc = p[descKeys[lang]] || p['descFa'] || 'توضیحات ندارد.';
-            document.getElementById('m-desc').innerText = desc;
-            
-            toggleModal('p-modal', true);
-        }
-
-        function addWithAnim(e) {
-            cart.push(currentItem);
-            updateCartUI();
-            
-            const btnRect = e.target.getBoundingClientRect();
-            const fly = document.createElement('div');
-            fly.className = 'flying-item';
-            fly.style.left = (btnRect.left + btnRect.width / 2 - 15) + 'px';
-            fly.style.top = (btnRect.top + btnRect.height / 2 - 15) + 'px';
-            document.body.appendChild(fly);
-            
-            const cartIcon = document.querySelector('.cart-btn');
-            const cartRect = cartIcon.getBoundingClientRect();
-
-            setTimeout(() => {
-                fly.style.left = (cartRect.left + 20) + 'px';
-                fly.style.top = (cartRect.top + 20) + 'px';
-                fly.style.transform = 'scale(0.1)';
-                fly.style.opacity = '0';
-            }, 10);
-
-            setTimeout(() => {
-                fly.remove();
-                haptic(30);
-            }, 700);
-
-            closeModal('p-modal');
-        }
-
-        function selectEmoji(el) {
-            if(cart.length === 0) return;
-            document.querySelectorAll('.emoji').forEach(e => e.classList.remove('selected'));
-            el.classList.add('selected');
-            document.getElementById('feedback').style.display = 'block';
-            
-            const btn = document.getElementById('final-btn');
-            btn.classList.remove('locked-btn');
-            btn.classList.add('unlocked-btn');
-            haptic([15, 15]);
-        }
-
-        function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
-            const list = document.getElementById('cart-items-container');
-            list.innerHTML = '';
-            
-            if(cart.length === 0) {
-                const emptyMsgs = {'fa': 'سبد خرید خالی است.', 'en': 'Cart is empty.', 'tr': 'Sepet boş.'};
-                const msg = emptyMsgs[lang] || emptyMsgs['fa'];
-                list.innerHTML = `<p style="text-align:center; color:#888;"></p>`;
-                document.getElementById('cart-total').innerText = formatPrice(0, lang);
-                return;
-            }
-
-            let total = 0;
-            cart.forEach(item => {
-                let numPrice = typeof item.price === 'number' ? item.price : 0;
-                total += numPrice;
-                
-                const name = item[lang] || item['fa'] || 'آیتم';
-                const priceStr = formatPrice(item.price, lang);
-                
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; color:#fff; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-weight:800;"><span></span><span style="color:var(--gold);"></span></div>`;
-            });
-            document.getElementById('cart-total').innerText = formatPrice(total, lang);
-        }
-
-        function openCartModal() { 
-            haptic(10);
-            document.querySelectorAll('.emoji').forEach(e => e.classList.remove('selected'));
-            document.getElementById('feedback').style.display = 'none';
-            document.getElementById('feedback').value = '';
-            const btn = document.getElementById('final-btn');
-            btn.classList.add('locked-btn');
-            btn.classList.remove('unlocked-btn');
-
-            updateCartUI();
-            toggleModal('cart-modal', true); 
-        }
-
-        function openAbout() { haptic(10); toggleModal('about-modal', true); }
+      if (sp > 0.4) {
+        let p = Math.min(1, Math.max(0, (sp - 0.4) / 0.6));
+        const cx2 = W/2, cy2 = H*0.55;
         
-        function closeModal(id, event) { 
-            if(event && event.target.id !== id) return;
-            document.getElementById(id).classList.remove('active'); 
-        }
-        function toggleModal(id, show) { 
-            const el = document.getElementById(id);
-            if(show) el.classList.add('active');
-            else el.classList.remove('active');
-        }
+        const bg = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, W*0.5);
+        bg.addColorStop(0, rgb(C.bgMid, p*0.85)); bg.addColorStop(0.6, rgb(C.bg, p)); bg.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
 
-        function finish() {
-            const btn = document.getElementById('final-btn');
-            if(btn.classList.contains('locked-btn')) return;
+        const auraAlpha = Math.max(0, (sp - 0.7) / 0.3);
+        const glow = ctx.createRadialGradient(W/2, H*0.4, 0, W/2, H*0.4, W*0.4);
+        glow.addColorStop(0, `rgba(212, 175, 55, ${auraAlpha * 0.18})`);
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0,0,W,H);
 
-            const successMsgs = {
-                'fa': 'سفارش و نظرسنجی با موفقیت ثبت شد.',
-                'en': 'Order and feedback saved successfully.',
-                'tr': 'Siparişiniz ve geri bildiriminiz başarıyla kaydedildi.'
-            };
-            alert(successMsgs[lang] || successMsgs['fa']);
-            
-            cart = [];
-            updateCartUI();
-            closeModal('cart-modal');
-            haptic([30, 50, 30]);
+        if (p > 0.1 && p < 0.9) {
+          const streamAlpha = Math.sin(Math.max(0, Math.min(1, (p - 0.1) / 0.8)) * Math.PI); 
+          ctx.save(); ctx.globalAlpha = streamAlpha;
+          const str = ctx.createLinearGradient(cx2, -50, cx2, cy2 + 10); str.addColorStop(0, rgb(C.gold, 0.8)); str.addColorStop(1, rgb(C.goldDim, 0.9)); ctx.fillStyle = str;
+          const wobble = Math.sin(tick * 0.2) * 1.5; ctx.beginPath(); ctx.moveTo(cx2 - 2 + wobble, -50); ctx.lineTo(cx2 + 2 + wobble, -50); ctx.lineTo(cx2 + 1, cy2 + 15); ctx.lineTo(cx2 - 1, cy2 + 15); ctx.fill(); ctx.restore();
         }
         
-        // اطمینان از مقداردهی اولیه زبان سایت هنگام لود
-        document.documentElement.lang = lang;
-    </script>
+        const fillPercentage = Math.max(0, Math.min(1, (p - 0.1) / 0.7)); 
+        drawCup(cx2, cy2 + 20, fillPercentage, p);
+        if (p > 0.3) drawSteam(cx2, cy2 - 35, Math.max(0, Math.min(1, (p - 0.3) / 0.7)));
+      }
+
+      const finalEl = document.getElementById('s-final');
+      if (finalEl) {
+        if (sp > 0.85) {
+           const textAlpha = Math.max(0, Math.min(1, (sp - 0.85) / 0.15));
+           finalEl.style.opacity = textAlpha;
+           finalEl.style.transform = `translateY(${(1-textAlpha)*20}px)`;
+        } else {
+           finalEl.style.opacity = 0;
+        }
+      }
+    }
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+
+  // --- Core i18n ---
+  window.setLang = function(lang){
+    document.querySelectorAll('.lb').forEach(b => { b.classList.toggle('active', b.dataset.lang === lang); });
+    document.documentElement.dir = (lang === 'fa' || lang === 'ar') ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+    localStorage.setItem('nandarbari_lang', lang);
+    const t = T[lang] || T['fa'];
+    document.querySelectorAll('[data-i]').forEach(el => {
+      const k = el.getAttribute('data-i');
+      if(t[k]) { if(el.dataset.html === "true") el.innerHTML = t[k]; else el.textContent = t[k]; }
+    });
+    const langSw = document.getElementById('lang-sw');
+    if (langSw) langSw.classList.add('show');
+    setTimeout(() => { const activeBtn = document.querySelector('.gn-btn.active'); if(activeBtn) movePillTo(activeBtn); }, 150);
+  };
+  
+  const savedLang = localStorage.getItem('nandarbari_lang') || 'fa';
+  document.querySelectorAll('.lb').forEach(b => b.addEventListener('click', (e) => setLang(e.target.dataset.lang)));
+  setLang(savedLang);
+});
+</script>
+
 </body>
 </html>
+
+```
